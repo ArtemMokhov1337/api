@@ -1,8 +1,8 @@
-package controllers
+package handlers
 
 import (
-	"crud_api/database"
-	"crud_api/models"
+	"myapi/database"
+	"myapi/models"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -27,7 +27,7 @@ func GetProductByID(c *gin.Context) {
 	id := c.Param("id")
 	var product models.Product
 	if err := database.DB.First(&product, id).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+		c.JSON(http.StatusNotFound, gin.H{"error": "Продукт не найден"})
 		return
 	}
 	c.JSON(http.StatusOK, product)
@@ -37,7 +37,7 @@ func UpdateProduct(c *gin.Context) {
 	id := c.Param("id")
 	var product models.Product
 	if err := database.DB.First(&product, id).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+		c.JSON(http.StatusNotFound, gin.H{"error": "продукт не найден"})
 		return
 	}
 	var input models.Product
@@ -54,9 +54,9 @@ func DeleteProduct(c *gin.Context) {
 	id := c.Param("id")
 	var product models.Product
 	if err := database.DB.First(&product, id).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
+		c.JSON(http.StatusNotFound, gin.H{"error": "Продукт не найден"})
 		return
 	}
 	database.DB.Delete(&product)
-	c.JSON(http.StatusOK, gin.H{"message": "Product deleted"})
+	c.JSON(http.StatusOK, gin.H{"message": "Продукт удален"})
 }
